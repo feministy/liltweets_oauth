@@ -20,3 +20,30 @@ def request_token
   end
   session[:request_token]
 end
+
+
+helpers do
+
+  def current_user
+    if session[:user_id]
+      @current_user ||= User.find(session[:user_id])
+    end
+  end
+
+  def twitter_client
+    if session[:user_id]
+      @twitter_client ||= Twitter::Client.new(
+        oauth_token: current_user.oauth_token,
+        oauth_token_secret: current_user.oauth_secret
+      )
+    end
+
+
+  end
+
+  def logged_in?
+    !current_user.nil?
+  end
+
+end
+

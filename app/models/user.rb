@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
-  # Remember to create a migration!
+  has_many :tweets
+  
   validates :username,     presence: true
   validates :oauth_token,  presence: true,
                            uniqueness: true
