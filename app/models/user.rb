@@ -20,5 +20,7 @@ class User < ActiveRecord::Base
   end  
 end
 
-# user = User.create(things)
-# user.tweet("I love cheese.")
+
+user.tweet('I love cheese!')
+# run ouath
+# then tweet

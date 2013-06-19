@@ -3,7 +3,7 @@ class TweetWorker
 
   sidekiq_options :retry => false, :backtrace => true
 
-  def perform(tweet_id)
+  def perform(tweet_id) # Gives you access to perform_async
     tweet = Tweet.find(tweet_id)
     user = tweet.user
 

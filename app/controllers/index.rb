@@ -26,7 +26,8 @@ get '/status/:job_id' do
 end
 
 post '/new/tweet' do
-  twitter_client.update(params[:body])
+  # user.tweet(params[:status])
+  twitter_client.update(params[:status])
   unless request.xhr?
     erb :tweet
   end
