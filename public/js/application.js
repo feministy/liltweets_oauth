@@ -1,28 +1,66 @@
 $(function() {
 
-  $('form#tweetas').on('submit', function(e) {
+  var $myTweet = $('form#tweet');
+
+  var beforeAppend = function() {
+    $('div.response').empty();
+    $("input[type=submit]").attr("disabled", true);
+    $("<h2 class='wait'>Tweet flying...</h2>").appendTo('div.response');
+  }
+
+  var successAppend = function() {
+    $('.wait').remove();
+    $('<h2>Tweet landed!</h2>').appendTo('div.response');
+    $("input[type=submit]").attr("disabled", false);
+  }
+
+   var workingAppend = function() {
+    $('.wait').remove();
+    $('<h2 class="wait">Tweet struggling...</h2>').appendTo('div.response');
+    $("input[type=submit]").attr("disabled", false);
+  }
+
+  var errorAppend = function () {
+    $('.wait').remove();
+    $('<h2>Tweet died!</h2>').appendTo('div.response');
+    $("input[type=submit]").attr("disabled", false);
+  }
+
+  $myTweet.on('submit', function(e) {
     e.preventDefault();
-    var tweetData = $('form#tweetas').serialize();
+    var tweetData = $myTweet.serialize();
     $.ajax({
       url: '/new/tweet',
       type: 'post',
       data: tweetData,
-      beforeSend: function() {
-        $('div.response').empty();
-        $("form#tweetas :input").attr("disabled", true);
-        $("<img id='wait' src='wait.gif' alt='waiting'>").appendTo('div.response');
+      beforeSend: function() { beforeAppend(); },
+      success: function(jsobJobId) {
+        var jobId = jsobJobId.job;
+        var goAgain = 0;
+
+        var checkSidekiq = function () {
+          $.ajax({
+            url: '/status/' + jobId,
+            type: 'get',
+            success: function(jobComplete) {
+              console.log(jobComplete);
+              if (jobComplete.finished === true) {
+                clearTimeout(goAgain);
+                successAppend();
+                $('textarea').val('');
+              }
+              else {
+                workingAppend();
+                goAgain = setTimeout(checkSidekiq, 10);
+              }
+            }
+          });
+        };
+        checkSidekiq();
       },
-      success: function() {
-        $('#wait').remove();
-        $('<h2></h2>').html('Success!').appendTo('div.response');
-        $("form#tweetas :input").attr("disabled", false);
-      },
-      error: function() {
-        $('#wait').remove();
-        $('<h2></h2>').html('Failure!').appendTo('div.response');
-        $("form#tweetas :input").attr("disabled", false);
-      }
+      error: function() { errorAppend(); }
     });
+
   });
 
 });

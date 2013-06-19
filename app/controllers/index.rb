@@ -18,16 +18,24 @@ get '/auth' do
                      oauth_token: @access_token.params[:oauth_token],
                      oauth_secret: @access_token.params[:oauth_token_secret])
   session[:user_id] = user.id
+  redirect to "/tweets/new"
+end
+
+get "/tweets/new" do
   erb :tweet
 end
 
 get '/status/:job_id' do
-  job_is_complete(params[:job_id])
+  finished = job_is_complete(params[:job_id])
+  content_type :json
+  {:finished => finished}.to_json
 end
 
 post '/new/tweet' do
-  current_user.tweet(params[:status])
+  job_id = current_user.tweet(params[:status])
   unless request.xhr?
     erb :tweet
   end
+  content_type :json
+  {:job => job_id}.to_json
 end

@@ -1,11 +1,7 @@
-def job_is_complete(job_id)
+def job_is_complete(jid)
   waiting = Sidekiq::Queue.new
   working = Sidekiq::Workers.new
-  if waiting.find { |job| job.job_id == job_id }
-    false
-  elsif working.find { |worker, info| info["payload"]["job_id"] == job_id}
-    false
-  else 
-    true
-  end 
+  return false if waiting.find { |job| job.jid == jid }
+  return false if working.find { |worker, info| info["payload"]["jid"] == jid }
+  true
 end 
