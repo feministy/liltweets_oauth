@@ -21,6 +21,10 @@ get '/auth' do
   erb :tweet
 end
 
+get '/status/:job_id' do
+  # return the status of a job to an AJAX call
+end
+
 post '/new/tweet' do
   twitter_client.update(params[:body])
   unless request.xhr?
