@@ -3,7 +3,7 @@ $(function() {
   $('form#tweetas').on('submit', function(e) {
     e.preventDefault();
     var tweetData = $('form#tweetas').serialize();
-    $.ajax ({
+    $.ajax({
       url: '/new/tweet',
       type: 'post',
       data: tweetData,
@@ -27,3 +27,10 @@ $(function() {
 
 });
 
+// $.ajax(
+//   url: '/status/' + job_id????,
+//   type: 'GET',
+//   data: ???? return of job_is_complete,
+//   setTimeout(function to check job_is_complete, time),
+//   success: 
+//   );

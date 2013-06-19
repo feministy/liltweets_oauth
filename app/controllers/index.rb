@@ -22,13 +22,12 @@ get '/auth' do
 end
 
 get '/status/:job_id' do
-  # return the status of a job to an AJAX call
+  job_is_complete(params[:job_id])
 end
 
 post '/new/tweet' do
-  user.tweet(params[:status])
-  # twitter_user.update(params[:status])
-  # unless request.xhr?
-  #   erb :tweet
-  # end
+  current_user.tweet(params[:status])
+  unless request.xhr?
+    erb :tweet
+  end
 end

@@ -21,6 +21,6 @@ class User < ActiveRecord::Base
 end
 
 
-user.tweet('I love cheese!')
+# user.tweet('I love cheese!')
 # run ouath
 # then tweet
