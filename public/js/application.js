@@ -10,7 +10,7 @@ $(function() {
 
   var successAppend = function() {
     $('.wait').remove();
-    $('<h2>Tweet landed!</h2>').appendTo('div.response');
+    $('<h2>Tweet landed!</h2>').appendTo('div.response').fadeOut(5000);
     $("input[type=submit]").attr("disabled", false);
   }
 
@@ -48,6 +48,8 @@ $(function() {
                 clearTimeout(goAgain);
                 successAppend();
                 $('textarea').val('');
+                $('input[type=text]').val('');
+
               }
               else {
                 workingAppend();

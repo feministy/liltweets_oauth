@@ -11,13 +11,13 @@ class User < ActiveRecord::Base
 
   def tweet_in(interval, status)
     tweet = tweets.create!(:status => status)
-    TweetWorker.perform_in(interval.hours, tweet.id)
+    TweetWorker.perform_in(interval.minutes, tweet.id)
   end
 
-  def tweet_at(timestamp, status)
-    tweet = tweets.create!(:status => status)
-    TweetWorker.perform_at(interval.hours.from_now, tweet.id)
-  end  
+  # def tweet_at(timestamp, status)
+  #   tweet = tweets.create!(:status => status)
+  #   TweetWorker.perform_at(interval.minutes.from_now, tweet.id)
+  # end  
 end
 
 

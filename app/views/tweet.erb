@@ -4,7 +4,9 @@
 
   <form id="tweet" method="post" action="/new/tweet">
     <textarea autofocus name='status' style='max-width: 98%; min-width: 98%' placeholder="Enter your tweet here..."></textarea>
-    <p style='text-align: center;'>
+
+    <p><em>Optional</em> <b>Tweet later?</b> Enter the number of minutes (10, 60 etc).</p>
+    <p><input type="text" name='interval'></p>
     <input type='submit' style='width: 10em;'>
     </p>
   </form>

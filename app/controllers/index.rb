@@ -32,10 +32,16 @@ get '/status/:job_id' do
 end
 
 post '/new/tweet' do
-  job_id = current_user.tweet(params[:status])
+  if params[:interval]
+    job_id = current_user.tweet_in(params[:interval].to_i, params[:status])
+  else 
+    job_id = current_user.tweet(params[:status])
+  end 
+
   unless request.xhr?
     erb :tweet
   end
+
   content_type :json
   {:job => job_id}.to_json
 end
