@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :oauth_token, :oauth_secret 
 
   def tweet(status)
-    tweet = tweets.create!(:status => status)
+    tweet = tweets.create!(:status => status, :user_id => self.id)
     TweetWorker.perform_async(tweet.id)
   end
 

@@ -30,14 +30,14 @@ helpers do
     end
   end
 
-  def twitter_client
-    if session[:user_id]
-      @twitter_user ||= Twitter::Client.new(
-        oauth_token: current_user.oauth_token,
-        oauth_token_secret: current_user.oauth_secret
-      )
-    end
-  end
+  # def twitter_client
+  #   if session[:user_id]
+  #     @twitter_user ||= Twitter::Client.new(
+  #       oauth_token: current_user.oauth_token,
+  #       oauth_token_secret: current_user.oauth_secret
+  #     )
+  #   end
+  # end
 
   def logged_in?
     !current_user.nil?
