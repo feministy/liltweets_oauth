@@ -32,13 +32,11 @@ helpers do
 
   def twitter_client
     if session[:user_id]
-      @twitter_client ||= Twitter::Client.new(
+      @twitter_user ||= Twitter::Client.new(
         oauth_token: current_user.oauth_token,
         oauth_token_secret: current_user.oauth_secret
       )
     end
-
-
   end
 
   def logged_in?

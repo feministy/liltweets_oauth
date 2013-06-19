@@ -27,7 +27,7 @@ end
 
 post '/new/tweet' do
   # user.tweet(params[:status])
-  twitter_client.update(params[:status])
+  twitter_user.update(params[:status])
   unless request.xhr?
     erb :tweet
   end
