@@ -1,2 +1,2 @@
 web: bundle exec thin start -p $PORT
-heroku ps:scale worker=1
+worker:  bundle exec rake jobs:work
